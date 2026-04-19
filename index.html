@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Melodia Atelier</title>
+    <meta
+      name="description"
+      content="Учебный шаблон бьюти-сайта: доверительная воронка, серии по типам кожи, длинный каталог и рабочая корзина."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-page="home">
+    <header class="site-header" data-shell="header"></header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <div>
+              <div class="eyebrow">Камерный бьюти-шаблон</div>
+              <h1>Собран как сильная воронка бренда, а не как случайный набор секций.</h1>
+            </div>
+            <p class="hero__lead">
+              В этом проекте уже зашиты ключевые паттерны хорошего ухода: спокойный hero, доверие к
+              производству, объяснение серий, длинный каталог и детальная карточка товара с
+              корзиной на `localStorage`.
+            </p>
+            <div class="button-row">
+              <a class="button" href="catalog.html">Открыть каталог</a>
+              <a class="button button_secondary" href="about.html">Посмотреть архитектуру бренда</a>
+            </div>
+            <div class="hero__metrics">
+              <div class="metric">
+                <strong>4 серии</strong>
+                <span>под разные сценарии кожи</span>
+              </div>
+              <div class="metric">
+                <strong>16 SKU</strong>
+                <span>в data-driven каталоге</span>
+              </div>
+              <div class="metric">
+                <strong>1 cart flow</strong>
+                <span>без конструктора и внешнего checkout</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero__visual">
+            <div class="hero__frame">
+              <img src="assets/images/cream-flora-promo.png" alt="Главный визуал Melodia Atelier">
+            </div>
+            <div class="floating-note">
+              <strong>Что изучать первым</strong>
+              <p>
+                Сначала откройте `catalog.html` и `product.html`, затем посмотрите, как страницы
+                собираются из `data.js` и `main.js`.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Разбор механики</div>
+            <h2>Здесь заложены не просто красивые блоки, а логика доверия.</h2>
+            <p>
+              Хороший бьюти-сайт продаёт не громкостью, а последовательностью: кто делает продукт,
+              как он собран, кому подходит и почему его вообще безопасно покупать.
+            </p>
+          </div>
+          <div class="story-grid" id="production-grid"></div>
+        </div>
+      </section>
+
+      <section class="section section_tinted">
+        <div class="container split">
+          <div class="split__media">
+            <div class="split__frame">
+              <img src="assets/images/brand-shot.png" alt="История и визуальная подача бренда">
+            </div>
+          </div>
+          <div class="split__body">
+            <div>
+              <div class="eyebrow">О бренде</div>
+              <h2>Сайт учит не только верстке, но и упаковке смыслов.</h2>
+            </div>
+            <p>
+              В шаблоне специально сохранён trust-first сценарий: сначала история, затем серии и
+              только потом полноценный каталог. Это помогает посмотреть на витрину глазами
+              человека, который пока ещё не готов к покупке, но уже начинает доверять.
+            </p>
+            <div class="quote-panel">
+              <p>“Не давите кнопкой «купить» сразу. Сначала объясните, почему вашему уходу можно верить.”</p>
+              <span>Это главный принцип сильной косметической воронки.</span>
+            </div>
+            <div class="button-row">
+              <a class="button" href="about.html">История бренда</a>
+              <a class="button button_secondary" href="series.html">Логика серий</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Серии</div>
+            <h2>Четыре линии, чтобы посетитель быстрее понял, где он в каталоге.</h2>
+            <p>
+              В референсе хорошо работает простая сегментация по состоянию кожи. Здесь этот приём
+              сохранён и перенесён в самостоятельную страницу с фильтрацией каталога.
+            </p>
+          </div>
+          <div class="series-preview-grid" id="series-preview"></div>
+        </div>
+      </section>
+
+      <section class="section section_tinted">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Почему это работает</div>
+            <h2>Преимущества построены как аргументы, а не как декоративные карточки.</h2>
+          </div>
+          <div class="benefits-grid" id="benefits-grid"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div class="eyebrow">Фрагменты каталога</div>
+            <h2>Ниже только четыре примера. Полный каталог собран на отдельной странице.</h2>
+            <p>
+              Это помогает держать главную страницу чистой и не превращать её в бесконечную
+              витрину с первого экрана.
+            </p>
+          </div>
+          <div class="mini-grid" id="featured-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" data-shell="footer"></footer>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

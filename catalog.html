@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог · Melodia Atelier</title>
+    <meta
+      name="description"
+      content="Длинный каталог с фильтрацией по сериям, слайдерами изображений, CTA в корзину и переходом в детальную карточку."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-page="catalog">
+    <header class="site-header" data-shell="header"></header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container page-hero__grid">
+          <div class="page-hero__copy">
+            <div>
+              <div class="eyebrow">Каталог</div>
+              <h1 id="catalog-headline">Каталог ритуалов</h1>
+            </div>
+            <p class="page-hero__lead" id="catalog-copy">
+              Длинный каталог показывает каждую позицию как самостоятельный мини-лендинг: фото,
+              действие, цена и путь в подробную карточку.
+            </p>
+            <div class="button-row">
+              <a class="button" href="product.html?id=aeris-foam">Открыть пример карточки</a>
+              <a class="button button_secondary" href="analysis/permyakova-reference.md">Читать разбор</a>
+            </div>
+          </div>
+          <div class="page-hero__visual">
+            <div class="page-hero__frame">
+              <img src="assets/images/brand-shot.png" alt="Каталог ритуалов ухода">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="filter-bar" id="catalog-filters"></div>
+          <div class="series-stack" id="catalog-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" data-shell="footer"></footer>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+.DS_Store
+Thumbs.db
+server-out.log
+server-err.log
+
+# Local source materials kept outside the published template
+Lato/
+Playfair Display/
+Lato.zip
+Playfair Display.zip
+2005.jpg
+4fedddf6-6a74-4543-bc85-8f7882a969a5.png
+Крем Флора.png
+Крем Флора2.png
+рук.png
+рук2.png
+себо.png
+себо2.png
+Универсальный шаблон.mhtml
