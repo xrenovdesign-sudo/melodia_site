@@ -144,6 +144,7 @@ query,cluster,intent,priority,target_page,source_seed,suggest_engines
 тоник для лица рейтинг,tonics,commercial_research,high,care-tonics-hydrolats.html,тоник для лица,google
 тоник для лица увлажняющий,tonics,commercial_research,high,care-tonics-hydrolats.html,тоник для лица,google+yandex
 тоник для лица это,tonics,commercial_research,high,care-tonics-hydrolats.html,тоник для лица,google+yandex
+увлажняющий крем для жирной кожи и проблемной кожи лица,balance,commercial_research,high,care-oily-skin.html,крем для жирной кожи лица,yandex
 увлажняющий крем для жирной кожи лица,balance,commercial_research,high,care-oily-skin.html,крем для жирной кожи лица,yandex
 увлажняющий крем для зрелой кожи лица,comfort,commercial_research,high,care-dry-skin.html,крем для зрелой кожи лица,google
 увлажняющий крем для комбинированной кожи лица,balance,commercial_research,high,care-oily-skin.html,крем для комбинированной кожи лица,google
@@ -170,13 +171,13 @@ organia крем для лица для зрелой кожи отзывы,comfo
 натуральная косметика ручной работы,brand,commercial_research,medium,index.html,натуральная косметика ручной работы,google+yandex
 пенка для умывания лица,renewal,commercial_research,medium,care-cleansing.html,пенка для умывания лица,google+yandex
 пенка для умывания лица какая лучше,renewal,research,medium,care-cleansing.html,пенка для умывания лица,google+yandex
+пилинг для лица,renewal,commercial_research,medium,care-cleansing.html,пилинг для лица,google+yandex
 пилинг для лица для чего,renewal,commercial_research,medium,care-cleansing.html,пилинг для лица,google+yandex
 пилинг для лица отзывы,renewal,research,medium,care-cleansing.html,пилинг для лица,google+yandex
 пилинг для лица это,renewal,commercial_research,medium,care-cleansing.html,пилинг для лица,google+yandex
 авторская косметика для лица,brand,commercial_research,low,index.html,авторская косметика для лица,seed_only
 гидролат для лица своими руками,tonics,commercial_research,low,care-tonics-hydrolats.html,гидролат для лица,google
 домашняя мастерская косметики,brand,commercial_research,low,index.html,домашняя мастерская косметики,seed_only
-какой крем выбрать для жирной кожи лица,balance,research,low,care-oily-skin.html,крем для жирной кожи лица,yandex
 косметика ручной работы купить,brand,commercial,low,index.html,натуральная косметика ручной работы,yandex
 крем от жирной кожи для мужчин лица,balance,commercial_research,low,care-oily-skin.html,крем для жирной кожи лица,yandex
 крем от раздражения после бритья для мужчин,male,research,low,care-aftershave.html,крем после бритья для мужчин,google
@@ -207,12 +208,10 @@ organia крем для лица для зрелой кожи отзывы,comfo
 "пенка для умывания лица увлажняющая с гиалуроновой кислотой synergetic, 150 мл",renewal,commercial_research,low,care-cleansing.html,пенка для умывания лица,yandex
 пенка для умывания лица увлажняющая purescience с центеллой,renewal,commercial_research,low,care-cleansing.html,пенка для умывания лица,google
 пенка для умывания лица milk foam premium,renewal,commercial_research,low,care-cleansing.html,пенка для умывания лица,google
-пилинг для лица,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,google
 пилинг для лица в домашних условиях,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,google
 пилинг для лица в домашних условиях рецепты,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,yandex
 пилинг для лица для чего он нужен,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,yandex
 пилинг для лица дома,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,google
-пилинг для лица зеленый,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,yandex
 пилинг для лица как пользоваться,renewal,research,low,care-cleansing.html,пилинг для лица,google
 пилинг для лица кислотный,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,google
 пилинг для лица профессиональный,renewal,commercial_research,low,care-cleansing.html,пилинг для лица,yandex
@@ -225,9 +224,9 @@ organia крем для лица для зрелой кожи отзывы,comfo
 успокаивающий крем после бритья для мужчин,male,research,low,care-aftershave.html,крем после бритья для мужчин,google
 хороший крем после бритья для мужчин,male,research,low,care-aftershave.html,крем после бритья для мужчин,google
 чистка лица,catalog,commercial_research,low,catalog.html,мягкое очищение лица,yandex
+чистка лица видео,catalog,commercial_research,low,catalog.html,мягкое очищение лица,yandex
 чистка лица для мужчин,catalog,commercial_research,low,catalog.html,мягкое очищение лица,yandex
 чистка лица до и после,catalog,research,low,catalog.html,мягкое очищение лица,yandex
-чистка лица москва,catalog,commercial_research,low,catalog.html,мягкое очищение лица,yandex
 чистка лица от черных точек,catalog,commercial_research,low,catalog.html,мягкое очищение лица,yandex
 чистка лица отзывы,catalog,research,low,catalog.html,мягкое очищение лица,yandex
 чистка лица спб,catalog,commercial_research,low,catalog.html,мягкое очищение лица,yandex

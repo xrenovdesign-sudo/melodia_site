@@ -17,7 +17,7 @@
 - tonics: 26
 - balance: 53
 - comfort: 58
-- renewal: 35
+- renewal: 34
 - brand: 4
 - series: 1
 - catalog: 9

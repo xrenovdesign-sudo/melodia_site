@@ -12,7 +12,7 @@ import {
 } from "./data.js";
 
 const CART_KEY = "melodia-cart";
-const SITE_URL = "https://xrenovdesign-sudo.github.io/melodia_site";
+const SITE_URL = "https://naturemelody.ru";
 const SERIES_PAGE_MAP = {
   comfort: "care-dry-skin.html",
   balance: "care-oily-skin.html",

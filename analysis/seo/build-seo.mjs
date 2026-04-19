@@ -4,7 +4,7 @@ import path from "node:path";
 import { brand, series, products } from "../../data.js";
 
 const ROOT = process.cwd();
-const SITE_URL = "https://xrenovdesign-sudo.github.io/melodia_site";
+const SITE_URL = "https://naturemelody.ru";
 const TODAY = new Date().toISOString().slice(0, 10);
 const DEFAULT_IMAGE = "assets/images/brand-shot.png";
 

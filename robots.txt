@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://xrenovdesign-sudo.github.io/melodia_site/sitemap.xml
+Sitemap: https://naturemelody.ru/sitemap.xml
