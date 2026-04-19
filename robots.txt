@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xrenovdesign-sudo.github.io/melodia_site/sitemap.xml

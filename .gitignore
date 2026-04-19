@@ -6,7 +6,9 @@ server.pid
 .npm-cache/
 .playwright-cli/
 .pw-daemon/
-analysis/
+analysis/*
+!analysis/seo/
+!analysis/seo/**
 output/playwright/
 
 # Local source materials kept outside the published template

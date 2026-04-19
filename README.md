@@ -35,6 +35,13 @@
   - [policy.html](policy.html)
   - [offer.html](offer.html)
 
+- SEO-слой:
+  - [analysis/seo/build-seo.mjs](analysis/seo/build-seo.mjs)
+  - [analysis/seo/semantic-core.csv](analysis/seo/semantic-core.csv)
+  - [analysis/seo/semantic-summary.md](analysis/seo/semantic-summary.md)
+  - [sitemap.xml](sitemap.xml)
+  - [robots.txt](robots.txt)
+
 ## Что менять под себя
 
 1. Контакты и бренд:
@@ -51,6 +58,9 @@
 
 5. Юридические тексты:
    заменить `legalPolicy` и `legalOffer` на реальные данные
+
+6. После обновления ассортимента:
+   запустить `node analysis/seo/build-seo.mjs`, чтобы пересобрать SEO-посадочные, товарные страницы, `sitemap.xml`, `robots.txt` и актуальное suggest-ядро
 
 ## Как работает корзина
 

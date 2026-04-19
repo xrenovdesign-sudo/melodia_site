@@ -12,8 +12,18 @@ import {
 } from "./data.js";
 
 const CART_KEY = "melodia-cart";
+const SITE_URL = "https://xrenovdesign-sudo.github.io/melodia_site";
+const SERIES_PAGE_MAP = {
+  comfort: "care-dry-skin.html",
+  balance: "care-oily-skin.html",
+  male: "care-aftershave.html",
+  tonics: "care-tonics-hydrolats.html",
+  renewal: "care-cleansing.html",
+  rescue: "care-recovery-balms.html",
+};
 
 const page = document.body.dataset.page || "home";
+const navPage = document.body.dataset.nav || page;
 const cartState = loadCart();
 
 const currency = new Intl.NumberFormat("ru-RU");
@@ -36,6 +46,53 @@ function getSeries(slug) {
 
 function getProduct(id) {
   return products.find((item) => item.id === id);
+}
+
+function productHref(id) {
+  return `product-${id}.html`;
+}
+
+function seriesHref(slug) {
+  return SERIES_PAGE_MAP[slug] || `catalog.html?series=${slug}`;
+}
+
+function absoluteUrl(path) {
+  return path.startsWith("http") ? path : `${SITE_URL}/${path}`;
+}
+
+function upsertMeta(selector, attributes) {
+  let node = document.head.querySelector(selector);
+  if (!node) {
+    node = document.createElement("meta");
+    document.head.append(node);
+  }
+  Object.entries(attributes).forEach(([key, value]) => {
+    node.setAttribute(key, value);
+  });
+}
+
+function upsertCanonical(href) {
+  let node = document.head.querySelector('link[rel="canonical"]');
+  if (!node) {
+    node = document.createElement("link");
+    node.setAttribute("rel", "canonical");
+    document.head.append(node);
+  }
+  node.setAttribute("href", href);
+}
+
+function applySeo({ title, description, canonical, robots, image = "assets/images/brand-shot.png" }) {
+  document.title = title;
+  upsertMeta('meta[name="description"]', { name: "description", content: description });
+  upsertMeta('meta[name="robots"]', { name: "robots", content: robots });
+  upsertCanonical(canonical);
+  upsertMeta('meta[property="og:title"]', { property: "og:title", content: title });
+  upsertMeta('meta[property="og:description"]', { property: "og:description", content: description });
+  upsertMeta('meta[property="og:url"]', { property: "og:url", content: canonical });
+  upsertMeta('meta[property="og:image"]', { property: "og:image", content: absoluteUrl(image) });
+  upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: title });
+  upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: description });
+  upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: absoluteUrl(image) });
 }
 
 function loadCart() {
@@ -148,7 +205,7 @@ function closeCart() {
 function renderHeader() {
   const links = menu
     .map((item) => {
-      const active = item.slug === page ? "is-active" : "";
+      const active = item.slug === navPage ? "is-active" : "";
       return `<a class="nav__link ${active}" href="${item.href}">${item.label}</a>`;
     })
     .join("");
@@ -251,7 +308,7 @@ function renderCartItems() {
     return `
       <div class="empty-state">
         <p>Корзина пока пустая.</p>
-        <p>Откройте каталог, соберите ритуал и затем скопируйте состав заказа в мессенджер.</p>
+        <p>Удобнее всего начать с серий, затем открыть каталог и уже после этого собрать заказ в мессенджер.</p>
         <a class="button button_secondary" href="catalog.html">Перейти в каталог</a>
       </div>
     `;
@@ -384,7 +441,7 @@ function createFeaturedCard(product) {
         <p>${product.shortDescription}</p>
         <div class="mini-product__footer">
           <strong>${formatProductPrice(product)}</strong>
-          <a class="text-link" href="product.html?id=${product.id}">Карточка товара</a>
+          <a class="text-link" href="${productHref(product.id)}">Карточка товара</a>
         </div>
       </div>
     </article>
@@ -407,8 +464,8 @@ function createSeriesCard(line) {
           ${line.focus.map((point) => `<li>${point}</li>`).join("")}
         </ul>
         <div class="button-row">
-          <a class="button" href="catalog.html?series=${line.slug}">Открыть серию</a>
-          <a class="button button_secondary" href="product.html?id=${line.exampleProductId}">Смотреть пример карточки</a>
+          <a class="button" href="${seriesHref(line.slug)}">Открыть серию</a>
+          <a class="button button_secondary" href="${productHref(line.exampleProductId)}">Смотреть пример карточки</a>
         </div>
       </div>
     </article>
@@ -440,7 +497,7 @@ function createCatalogCard(product, index) {
         </div>
         <div class="button-row">
           <button class="button" type="button" data-add-to-cart="${product.id}">Добавить в корзину</button>
-          <a class="button button_secondary" href="product.html?id=${product.id}">Узнать подробнее</a>
+          <a class="button button_secondary" href="${productHref(product.id)}">Узнать подробнее</a>
         </div>
       </div>
     </article>
@@ -494,7 +551,7 @@ function renderHomePage() {
               <div class="eyebrow">${line.label}</div>
               <h3>${line.name}</h3>
               <p>${line.short}</p>
-              <a class="text-link" href="catalog.html?series=${line.slug}">Перейти к серии</a>
+              <a class="text-link" href="${seriesHref(line.slug)}">Перейти к серии</a>
             </div>
           </article>
         `
@@ -576,9 +633,28 @@ function renderCatalogPage() {
   }
   if (copy) {
     copy.textContent = activeLine
-      ? `${activeLine.long} Ниже собраны все средства этой линии с фото, форматами, составами и рекомендациями по применению.`
-      : "В каталоге собраны все актуальные средства бренда: с фото, форматами, ценами, составами и переходом в подробную карточку.";
+      ? `${activeLine.long} Ниже собраны средства этой линии. Сначала можно сравнить карточки по текстуре и задаче, а затем уже уточнить партию или подбор напрямую у Юлии.`
+      : "В каталоге собраны актуальные средства бренда. Удобнее всего идти от серии к карточке: сначала задача кожи, затем формула, формат и уточнение у Юлии, если нужен более точный подбор.";
   }
+
+  applySeo(
+    activeLine
+      ? {
+          title: `Каталог серии ${activeLine.name} | Мелодия природы`,
+          description: `${activeLine.short} В фильтре собраны только средства этой линии.`,
+          canonical: absoluteUrl(seriesHref(activeLine.slug)),
+          robots: "noindex,follow",
+          image: activeLine.promo || activeLine.image,
+        }
+      : {
+          title: "Каталог натуральной уходовой косметики | Мелодия природы",
+          description:
+            "Каталог бренда «Мелодия природы»: кремы, бальзамы, тоники, гидролаты и очищающие средства с карточками, составами и сценариями применения.",
+          canonical: absoluteUrl("catalog.html"),
+          robots: "index,follow,max-image-preview:large",
+          image: "assets/images/brand-shot.png",
+        }
+  );
 
   const filtered = activeSeries === "all" ? products : products.filter((item) => item.series === activeSeries);
   const list = byId("catalog-list");
@@ -591,9 +667,15 @@ function renderCatalogPage() {
 
 function renderProductPage() {
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  const routedId = document.body.dataset.productId;
+  const id = routedId || params.get("id");
   const product = getProduct(id);
   const shell = byId("product-shell");
+
+  if (!routedId && id) {
+    window.location.replace(productHref(id));
+    return;
+  }
 
   if (!shell) {
     return;
@@ -633,7 +715,7 @@ function renderProductPage() {
           </ul>
           <div class="button-row">
             <button class="button" type="button" data-add-to-cart="${product.id}">Добавить в корзину</button>
-            <a class="button button_secondary" href="catalog.html?series=${product.series}">Назад к серии</a>
+            <a class="button button_secondary" href="${seriesHref(product.series)}">Назад к серии</a>
           </div>
         </div>
       </div>
