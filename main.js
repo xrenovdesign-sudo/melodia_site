@@ -59,6 +59,10 @@ function formatPrice(value) {
   return `${currency.format(value)} ₽`;
 }
 
+function formatProductPrice(product) {
+  return product.priceLabel || formatPrice(product.price);
+}
+
 function cartCount() {
   return cartState.reduce((sum, item) => sum + item.quantity, 0);
 }
@@ -72,7 +76,7 @@ function cartTotal() {
 
 function buildOrderText() {
   if (!cartState.length) {
-    return "Хочу получить подбор ухода по шаблону Melodia Atelier.";
+    return `Хочу подобрать уход от бренда «${brand.name}».`;
   }
 
   const lines = cartState
@@ -159,13 +163,13 @@ function renderHeader() {
     <div class="container nav">
       <a class="brandmark" href="index.html" aria-label="На главную">
         <span class="brandmark__title">${brand.displayName}</span>
-        <span class="brandmark__subtitle">skin atelier</span>
+        <span class="brandmark__subtitle">${brand.headerNote || "авторская косметика"}</span>
       </a>
       <nav class="nav__menu" aria-label="Основная навигация">
         ${links}
       </nav>
       <div class="nav__actions">
-        <a class="button button_ghost nav__action" href="series.html">Подбор серии</a>
+        <a class="button button_ghost nav__action" href="${brand.contacts.telegramProfile}">Написать Юлии</a>
         <button class="cart-button" type="button" data-cart-toggle>
           Корзина
           <span class="cart-button__count" data-cart-count>${cartCount()}</span>
@@ -180,14 +184,21 @@ function renderFooter() {
     .map((item) => `<a class="footer__link" href="${item.href}">${item.label}</a>`)
     .join("");
 
+  const contactLinks = [
+    `<a class="footer__link" href="${brand.contacts.phoneLink}">${brand.contacts.phone}</a>`,
+    brand.contacts.email ? `<a class="footer__link" href="${brand.contacts.emailLink}">${brand.contacts.email}</a>` : "",
+    brand.contacts.telegramProfile ? `<a class="footer__link" href="${brand.contacts.telegramProfile}">Telegram</a>` : "",
+    brand.contacts.max ? `<a class="footer__link" href="${brand.contacts.max}">MAX</a>` : "",
+    brand.contacts.vk ? `<a class="footer__link" href="${brand.contacts.vk}">VK</a>` : "",
+  ]
+    .filter(Boolean)
+    .join("");
+
   return `
     <div class="container footer__grid">
       <div>
         <div class="footer__brand">${brand.displayName}</div>
-        <p class="footer__copy">
-          Учебный шаблон интернет-магазина косметики: спокойная воронка, длинные карточки товара,
-          логика серий и простая корзина без конструктора.
-        </p>
+        <p class="footer__copy">${brand.footerCopy}</p>
       </div>
       <div>
         <div class="footer__eyebrow">Навигация</div>
@@ -195,12 +206,7 @@ function renderFooter() {
       </div>
       <div>
         <div class="footer__eyebrow">Контакты</div>
-        <div class="footer__links">
-          <a class="footer__link" href="${brand.contacts.phoneLink}">${brand.contacts.phone}</a>
-          <a class="footer__link" href="${brand.contacts.emailLink}">${brand.contacts.email}</a>
-          <a class="footer__link" href="${brand.contacts.telegramProfile}">Telegram</a>
-          <a class="footer__link" href="${brand.contacts.vk}">VK</a>
-        </div>
+        <div class="footer__links">${contactLinks}</div>
       </div>
       <div>
         <div class="footer__eyebrow">Юридическое</div>
@@ -377,7 +383,7 @@ function createFeaturedCard(product) {
         <h3>${product.title}</h3>
         <p>${product.shortDescription}</p>
         <div class="mini-product__footer">
-          <strong>${formatPrice(product.price)}</strong>
+          <strong>${formatProductPrice(product)}</strong>
           <a class="text-link" href="product.html?id=${product.id}">Карточка товара</a>
         </div>
       </div>
@@ -402,7 +408,7 @@ function createSeriesCard(line) {
         </ul>
         <div class="button-row">
           <a class="button" href="catalog.html?series=${line.slug}">Открыть серию</a>
-          <a class="button button_secondary" href="product.html?id=${line.slug}-day-cream">Смотреть пример карточки</a>
+          <a class="button button_secondary" href="product.html?id=${line.exampleProductId}">Смотреть пример карточки</a>
         </div>
       </div>
     </article>
@@ -429,7 +435,7 @@ function createCatalogCard(product, index) {
           </div>
           <div>
             <span class="catalog-card__meta-label">Цена</span>
-            <strong>${formatPrice(product.price)}</strong>
+            <strong>${formatProductPrice(product)}</strong>
           </div>
         </div>
         <div class="button-row">
@@ -619,7 +625,7 @@ function renderProductPage() {
           <h1>${product.title}</h1>
           <p class="product-hero__lead">${product.heroText}</p>
           <div class="product-price">
-            <strong>${formatPrice(product.price)}</strong>
+            <strong>${formatProductPrice(product)}</strong>
             <span>${product.size}</span>
           </div>
           <ul class="bullet-list">
@@ -708,8 +714,8 @@ function renderLegalPage(data, title) {
           <div class="eyebrow">Юридический блок</div>
           <h1>${title}</h1>
           <p>
-            Это учебный текст-каркас. Перед публикацией замените контакты, реквизиты, условия оплаты,
-            доставки и возврата на свои реальные данные.
+            Информационный раздел бренда «${brand.name}». Перед запуском продаж стоит проверить
+            актуальность реквизитов, условий оплаты, доставки и возврата.
           </p>
         </div>
         <div class="legal-stack">

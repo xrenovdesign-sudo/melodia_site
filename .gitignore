@@ -2,6 +2,12 @@
 Thumbs.db
 server-out.log
 server-err.log
+server.pid
+.npm-cache/
+.playwright-cli/
+.pw-daemon/
+analysis/
+output/playwright/
 
 # Local source materials kept outside the published template
 Lato/
