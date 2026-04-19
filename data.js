@@ -28,7 +28,7 @@ export const brand = {
 };
 
 export const menu = [
-  { slug: "home", href: "index.html", label: "Главная" },
+  { slug: "home", href: "/", label: "Главная" },
   { slug: "about", href: "about.html", label: "О мастерской" },
   { slug: "series", href: "series.html", label: "Подбор по коже" },
   { slug: "catalog", href: "catalog.html", label: "Каталог" },

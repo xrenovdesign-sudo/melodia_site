@@ -57,6 +57,9 @@ function seriesHref(slug) {
 }
 
 function absoluteUrl(path) {
+  if (path === "/" || path === "index.html") {
+    return `${SITE_URL}/`;
+  }
   return path.startsWith("http") ? path : `${SITE_URL}/${path}`;
 }
 
@@ -218,7 +221,8 @@ function renderHeader() {
       </div>
     </div>
     <div class="container nav">
-      <a class="brandmark" href="index.html" aria-label="На главную">
+      <a class="brandmark" href="/" aria-label="На главную">
+      
         <span class="brandmark__title">${brand.displayName}</span>
         <span class="brandmark__subtitle">${brand.headerNote || "авторская косметика"}</span>
       </a>

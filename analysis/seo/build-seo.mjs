@@ -224,6 +224,9 @@ function escapeJson(value) {
 }
 
 function toAbsoluteUrl(file) {
+  if (file === "index.html" || file === "/") {
+    return `${SITE_URL}/`;
+  }
   return `${SITE_URL}/${file}`;
 }
 
@@ -276,7 +279,7 @@ function organizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: brand.displayName,
-    url: `${SITE_URL}/index.html`,
+    url: `${SITE_URL}/`,
     logo: toImageUrl("assets/images/cream-flora-photo.png"),
     image: toImageUrl(DEFAULT_IMAGE),
     telephone: brand.contacts.phone,
@@ -425,7 +428,7 @@ function productPageHtml(product) {
   const schema = [
     organizationSchema(),
     breadcrumbSchema([
-      { name: "Главная", url: toAbsoluteUrl("index.html") },
+      { name: "Главная", url: toAbsoluteUrl("/") },
       { name: "Каталог", url: toAbsoluteUrl("catalog.html") },
       { name: line.name, url: toAbsoluteUrl(seriesFile(line.slug)) },
       { name: product.title, url: canonical },
@@ -545,7 +548,7 @@ function seriesLandingHtml(line) {
   const schema = [
     organizationSchema(),
     breadcrumbSchema([
-      { name: "Главная", url: toAbsoluteUrl("index.html") },
+      { name: "Главная", url: toAbsoluteUrl("/") },
       { name: "Подбор по коже", url: toAbsoluteUrl("series.html") },
       { name: line.name, url: toAbsoluteUrl(file) },
     ]),
