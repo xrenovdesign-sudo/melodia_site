@@ -10,8 +10,8 @@ analysis/
 output/playwright/
 
 # Local source materials kept outside the published template
-Lato/
-Playfair Display/
+/Lato/
+/Playfair Display/
 Lato.zip
 Playfair Display.zip
 2005.jpg
