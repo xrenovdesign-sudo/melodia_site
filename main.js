@@ -572,12 +572,12 @@ function renderCatalogPage() {
   const headline = byId("catalog-headline");
   const copy = byId("catalog-copy");
   if (headline) {
-    headline.textContent = activeLine ? `Каталог серии ${activeLine.name}` : "Каталог ритуалов";
+    headline.textContent = activeLine ? `Каталог серии ${activeLine.name}` : "Каталог ухода";
   }
   if (copy) {
     copy.textContent = activeLine
-      ? `${activeLine.long} Ниже — вся линейка в формате длинных продуктовых секций, как в сильной бьюти-воронке.`
-      : "Длинный каталог показывает каждую позицию как самостоятельный мини-лендинг: фото, действие, цена и путь в подробную карточку.";
+      ? `${activeLine.long} Ниже собраны все средства этой линии с фото, форматами, составами и рекомендациями по применению.`
+      : "В каталоге собраны все актуальные средства бренда: с фото, форматами, ценами, составами и переходом в подробную карточку.";
   }
 
   const filtered = activeSeries === "all" ? products : products.filter((item) => item.series === activeSeries);

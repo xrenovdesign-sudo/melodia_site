@@ -426,9 +426,15 @@ p {
 .hero__frame img,
 .split__frame img,
 .page-hero__frame img {
+  display: block;
   width: 100%;
   height: min(78vh, 720px);
   object-fit: cover;
+}
+
+.page-hero__frame_about img {
+  height: min(72vh, 680px);
+  object-position: 58% 38%;
 }
 
 .hero__metrics {
@@ -1061,6 +1067,11 @@ p {
     height: auto;
     min-height: 0;
   }
+
+  .page-hero__frame_about img {
+    aspect-ratio: 0.92 / 1;
+    object-position: 56% 36%;
+  }
 }
 
 @media (max-width: 720px) {
@@ -1120,14 +1131,11 @@ p {
   .nav__menu {
     order: 3;
     flex-basis: 100%;
-    flex-wrap: nowrap;
-    gap: 16px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    overflow: visible;
     justify-content: flex-start;
-    padding-bottom: 2px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    padding-top: 2px;
   }
 
   .nav__menu::-webkit-scrollbar {
@@ -1137,7 +1145,7 @@ p {
   .nav__link {
     flex: 0 0 auto;
     white-space: nowrap;
-    padding: 6px 0;
+    padding: 4px 0;
     font-size: 0.95rem;
   }
 
@@ -1185,6 +1193,17 @@ p {
     margin-top: 18px;
   }
 
+  .page-hero__frame_about img,
+  .split__frame img,
+  .hero__frame img {
+    aspect-ratio: 1 / 1.04;
+    object-position: center;
+  }
+
+  .page-hero__frame_about img {
+    object-position: 56% 34%;
+  }
+
   .cart-item {
     grid-template-columns: 80px 1fr;
   }
@@ -1192,5 +1211,30 @@ p {
   .cart-item__image {
     width: 80px;
     height: 80px;
+  }
+}
+
+@media (max-width: 420px) {
+  h1 {
+    font-size: clamp(2.2rem, 13vw, 3.4rem);
+  }
+
+  .nav {
+    gap: 8px;
+  }
+
+  .brandmark__title {
+    font-size: 1.05rem;
+    letter-spacing: 0.12em;
+  }
+
+  .brandmark__subtitle {
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+  }
+
+  .nav__actions .cart-button {
+    min-height: 38px;
+    padding: 0 12px;
   }
 }
