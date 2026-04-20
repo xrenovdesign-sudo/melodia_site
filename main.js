@@ -468,8 +468,8 @@ function createSeriesCard(line) {
           ${line.focus.map((point) => `<li>${point}</li>`).join("")}
         </ul>
         <div class="button-row">
-          <a class="button" href="${seriesHref(line.slug)}">Открыть серию</a>
-          <a class="button button_secondary" href="${productHref(line.exampleProductId)}">Смотреть пример карточки</a>
+          <a class="button" href="${seriesHref(line.slug)}">Смотреть направление</a>
+          <a class="button button_secondary" href="${productHref(line.exampleProductId)}">Пример средства</a>
         </div>
       </div>
     </article>
