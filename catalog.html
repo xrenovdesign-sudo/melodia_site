@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#f6ede5">
     <title>Каталог натуральной уходовой косметики | Мелодия природы</title>
     <meta
       name="description"
@@ -32,26 +34,62 @@
         "description": "Каталог бренда с карточками средств и сценариями применения."
       }
     </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Мелодия природы",
+        "url": "https://naturemelody.ru/",
+        "inLanguage": "ru-RU"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://naturemelody.ru/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Каталог",
+            "item": "https://naturemelody.ru/catalog.html"
+          }
+        ]
+      }
+    </script>
   </head>
   <body data-page="catalog">
     <header class="site-header" data-shell="header"></header>
 
     <main>
       <section class="page-hero">
-        <div class="container page-hero__grid">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <ol class="breadcrumbs__list">
+              <li class="breadcrumbs__item"><a href="/">Главная</a></li>
+              <li class="breadcrumbs__item"><span class="breadcrumbs__current" aria-current="page">Каталог</span></li>
+            </ol>
+          </nav>
+        <div class="page-hero__grid">
           <div class="page-hero__copy">
             <div>
               <div class="eyebrow">Каталог</div>
               <h1 id="catalog-headline">Каталог ухода</h1>
             </div>
             <p class="page-hero__lead" id="catalog-copy">
-              Каталог собран как рабочая база выбора: сначала краткая логика средства, затем
-              формат, цена, подробная карточка и уже после этого прямой контакт с Юлией, если
-              нужен более точный подбор.
+              Каталог устроен как спокойный рабочий маршрут: сначала понять, с какой задачей
+              работает средство, потом сравнить формат и цену, а уже после этого открывать
+              карточку или уточнять подбор у Юлии.
             </p>
             <div class="button-row">
-              <a class="button" href="product-flora-direct.html">Открыть популярную карточку</a>
-              <a class="button button_secondary" href="series.html">Смотреть подбор по коже</a>
+              <a class="button" href="series.html">Сначала подобрать направление</a>
+              <a class="button button_secondary" href="product-flora-direct.html">Открыть пример карточки</a>
             </div>
           </div>
           <div class="page-hero__visual">
@@ -59,6 +97,7 @@
               <img src="assets/images/brand-shot.png" alt="Каталог средств бренда «Мелодия природы»">
             </div>
           </div>
+        </div>
         </div>
       </section>
 

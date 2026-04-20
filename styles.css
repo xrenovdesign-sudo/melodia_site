@@ -178,6 +178,7 @@ button {
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .nav__menu {
@@ -238,6 +239,7 @@ button {
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 600;
+  text-align: center;
 }
 
 .button {
@@ -482,6 +484,47 @@ p {
   margin-bottom: 8px;
   font-family: "Playfair Display", serif;
   font-size: 1.4rem;
+  color: var(--ink);
+}
+
+.breadcrumbs {
+  margin-bottom: 18px;
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.breadcrumbs__item:not(:last-child)::after {
+  content: "/";
+  color: rgba(93, 72, 61, 0.45);
+}
+
+.breadcrumbs__item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumbs__item a:hover,
+.breadcrumbs__item a:focus-visible {
+  color: var(--accent);
+}
+
+.breadcrumbs__current {
   color: var(--ink);
 }
 
@@ -1117,6 +1160,11 @@ p {
   .series-preview-grid,
   .footer__grid {
     grid-template-columns: 1fr;
+  }
+
+  .breadcrumbs__list {
+    font-size: 0.9rem;
+    gap: 6px 8px;
   }
 
   .topline {

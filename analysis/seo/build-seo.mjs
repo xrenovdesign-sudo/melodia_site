@@ -267,6 +267,8 @@ function renderHead(meta, schemaItems = []) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#f6ede5">
     ${pageMetaTags(meta)}
     <link rel="icon" href="assets/images/cream-flora-photo.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
@@ -274,20 +276,46 @@ function renderHead(meta, schemaItems = []) {
   </head>`.trimEnd();
 }
 
+function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: brand.displayName,
+    url: `${SITE_URL}/`,
+    inLanguage: "ru-RU",
+  };
+}
+
 function organizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "HealthAndBeautyBusiness",
     name: brand.displayName,
     url: `${SITE_URL}/`,
     logo: toImageUrl("assets/images/cream-flora-photo.png"),
     image: toImageUrl(DEFAULT_IMAGE),
     telephone: brand.contacts.phone,
+    priceRange: "600-1600 RUB",
+    founder: {
+      "@type": "Person",
+      name: brand.legal.owner,
+    },
     address: {
       "@type": "PostalAddress",
       addressLocality: "Балакирево",
       addressRegion: "Владимирская область",
       addressCountry: "RU",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "RU",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: brand.contacts.phone,
+      contactType: "customer support",
+      areaServed: "RU",
+      availableLanguage: ["ru"],
     },
     sameAs: [brand.contacts.telegramProfile, brand.contacts.max, brand.contacts.vk].filter(Boolean),
   };
@@ -368,6 +396,23 @@ function faqSchema(items) {
   };
 }
 
+function webPageSchema({ type = "WebPage", name, description, url, about }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    name,
+    description,
+    url,
+    inLanguage: "ru-RU",
+    isPartOf: {
+      "@type": "WebSite",
+      name: brand.displayName,
+      url: `${SITE_URL}/`,
+    },
+    about,
+  };
+}
+
 function productFile(product) {
   return `product-${product.id}.html`;
 }
@@ -401,6 +446,25 @@ function galleryHtml(images, title, compact = false) {
   `;
 }
 
+function breadcrumbsNavHtml(items) {
+  return `
+    <nav class="breadcrumbs" aria-label="Хлебные крошки">
+      <ol class="breadcrumbs__list">
+        ${items
+          .map((item, index) => {
+            const isLast = index === items.length - 1;
+            const content = isLast
+              ? `<span class="breadcrumbs__current" aria-current="page">${escapeHtml(item.name)}</span>`
+              : `<a href="${escapeHtml(item.url)}">${escapeHtml(item.name)}</a>`;
+
+            return `<li class="breadcrumbs__item">${content}</li>`;
+          })
+          .join("")}
+      </ol>
+    </nav>
+  `;
+}
+
 function miniCardHtml(product) {
   return `
     <article class="mini-product">
@@ -423,16 +487,28 @@ function productPageHtml(product) {
   const related = products.filter((item) => item.series === product.series && item.id !== product.id).slice(0, 3);
   const file = productFile(product);
   const canonical = toAbsoluteUrl(file);
-  const description = `${product.shortDescription} ${product.priceLabel || `${product.price} ₽`}. ${product.size}.`;
+  const description = `${product.shortDescription} ${product.priceLabel || `${product.price} RUB`}. ${product.size}.`;
+  const breadcrumbs = [
+    { name: "Главная", url: toAbsoluteUrl("/") },
+    { name: "Каталог", url: toAbsoluteUrl("catalog.html") },
+    { name: line.name, url: toAbsoluteUrl(seriesFile(line.slug)) },
+    { name: product.title, url: canonical },
+  ];
 
   const schema = [
+    websiteSchema(),
     organizationSchema(),
-    breadcrumbSchema([
-      { name: "Главная", url: toAbsoluteUrl("/") },
-      { name: "Каталог", url: toAbsoluteUrl("catalog.html") },
-      { name: line.name, url: toAbsoluteUrl(seriesFile(line.slug)) },
-      { name: product.title, url: canonical },
-    ]),
+    breadcrumbSchema(breadcrumbs),
+    webPageSchema({
+      type: "ProductPage",
+      name: product.title,
+      description,
+      url: canonical,
+      about: {
+        "@type": "Thing",
+        name: line.name,
+      },
+    }),
     productSchema(product, line, file),
   ];
 
@@ -452,24 +528,27 @@ ${renderHead(
     <header class="site-header" data-shell="header"></header>
     <main>
       <section class="section">
-        <div class="container product-hero">
-          <div class="product-hero__gallery">
-            ${galleryHtml(product.gallery, product.title)}
-          </div>
-          <div class="product-hero__body">
-            <div class="eyebrow">${escapeHtml(line.name)} · ${escapeHtml(line.label)}</div>
-            <h1>${escapeHtml(product.title)}</h1>
-            <p class="product-hero__lead">${escapeHtml(product.heroText)}</p>
-            <div class="product-price">
-              <strong>${escapeHtml(product.priceLabel || `${product.price} ₽`)}</strong>
-              <span>${escapeHtml(product.size)}</span>
+        <div class="container">
+          ${breadcrumbsNavHtml(breadcrumbs)}
+          <div class="product-hero">
+            <div class="product-hero__gallery">
+              ${galleryHtml(product.gallery, product.title)}
             </div>
-            <ul class="bullet-list">
-              ${product.benefits.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}
-            </ul>
-            <div class="button-row">
-              <button class="button" type="button" data-add-to-cart="${escapeHtml(product.id)}">Добавить в корзину</button>
-              <a class="button button_secondary" href="${escapeHtml(seriesFile(product.series))}">Вернуться к подборке</a>
+            <div class="product-hero__body">
+              <div class="eyebrow">${escapeHtml(line.name)} · ${escapeHtml(line.label)}</div>
+              <h1>${escapeHtml(product.title)}</h1>
+              <p class="product-hero__lead">${escapeHtml(product.heroText)}</p>
+              <div class="product-price">
+                <strong>${escapeHtml(product.priceLabel || `${product.price} RUB`)}</strong>
+                <span>${escapeHtml(product.size)}</span>
+              </div>
+              <ul class="bullet-list">
+                ${product.benefits.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}
+              </ul>
+              <div class="button-row">
+                <button class="button" type="button" data-add-to-cart="${escapeHtml(product.id)}">Добавить в корзину</button>
+                <a class="button button_secondary" href="${escapeHtml(seriesFile(product.series))}">Вернуться к подборке</a>
+              </div>
             </div>
           </div>
         </div>
@@ -545,13 +624,26 @@ function seriesLandingHtml(line) {
   const file = config.file;
   const items = products.filter((item) => item.series === line.slug);
   const lead = items.slice(0, 4);
+  const canonical = toAbsoluteUrl(file);
+  const breadcrumbs = [
+    { name: "Главная", url: toAbsoluteUrl("/") },
+    { name: "Подбор по коже", url: toAbsoluteUrl("series.html") },
+    { name: line.name, url: canonical },
+  ];
   const schema = [
+    websiteSchema(),
     organizationSchema(),
-    breadcrumbSchema([
-      { name: "Главная", url: toAbsoluteUrl("/") },
-      { name: "Подбор по коже", url: toAbsoluteUrl("series.html") },
-      { name: line.name, url: toAbsoluteUrl(file) },
-    ]),
+    breadcrumbSchema(breadcrumbs),
+    webPageSchema({
+      type: "CollectionPage",
+      name: line.name,
+      description: config.description,
+      url: canonical,
+      about: {
+        "@type": "Thing",
+        name: line.label,
+      },
+    }),
     collectionPageSchema(line, file, items),
     faqSchema(config.faq),
   ];
@@ -562,7 +654,7 @@ ${renderHead(
   {
     title: config.title,
     description: config.description,
-    canonical: toAbsoluteUrl(file),
+    canonical,
     image: line.promo || line.image,
   },
   schema
@@ -571,21 +663,24 @@ ${renderHead(
     <header class="site-header" data-shell="header"></header>
     <main>
       <section class="page-hero">
-        <div class="container page-hero__grid">
-          <div class="page-hero__copy">
-            <div>
-              <div class="eyebrow">${escapeHtml(line.label)}</div>
-              <h1>${escapeHtml(config.title.replace(" | Мелодия природы", ""))}</h1>
+        <div class="container">
+          ${breadcrumbsNavHtml(breadcrumbs)}
+          <div class="page-hero__grid">
+            <div class="page-hero__copy">
+              <div>
+                <div class="eyebrow">${escapeHtml(line.label)}</div>
+                <h1>${escapeHtml(config.title.replace(` | ${brand.displayName}`, ""))}</h1>
+              </div>
+              <p class="page-hero__lead">${escapeHtml(config.intro)}</p>
+              <div class="button-row">
+                <a class="button" href="catalog.html?series=${escapeHtml(line.slug)}">Смотреть товары серии</a>
+                <a class="button button_secondary" href="${escapeHtml(productFile(lead[0]))}">Открыть первую карточку</a>
+              </div>
             </div>
-            <p class="page-hero__lead">${escapeHtml(config.intro)}</p>
-            <div class="button-row">
-              <a class="button" href="catalog.html?series=${escapeHtml(line.slug)}">Смотреть товары серии</a>
-              <a class="button button_secondary" href="${escapeHtml(productFile(lead[0]))}">Открыть первую карточку</a>
-            </div>
-          </div>
-          <div class="page-hero__visual">
-            <div class="page-hero__frame">
-              <img src="${escapeHtml(line.promo || line.image)}" alt="${escapeHtml(line.name)}">
+            <div class="page-hero__visual">
+              <div class="page-hero__frame">
+                <img src="${escapeHtml(line.promo || line.image)}" alt="${escapeHtml(line.name)}">
+              </div>
             </div>
           </div>
         </div>
