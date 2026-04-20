@@ -230,7 +230,7 @@ function renderHeader() {
         ${links}
       </nav>
       <div class="nav__actions">
-        <a class="button button_ghost nav__action" href="${brand.contacts.telegramProfile}">Написать Юлии</a>
+        <a class="button button_ghost nav__action" href="${brand.contacts.telegramProfile}">Уточнить подбор</a>
         <button class="cart-button" type="button" data-cart-toggle>
           Корзина
           <span class="cart-button__count" data-cart-count>${cartCount()}</span>
@@ -287,7 +287,7 @@ function renderCartDrawer() {
       <div class="cart-drawer__header">
         <div>
           <div class="eyebrow">Корзина</div>
-          <h2>Ваш ритуал ухода</h2>
+          <h2>Выбранные средства</h2>
         </div>
         <button class="icon-button" type="button" data-cart-close aria-label="Закрыть корзину">×</button>
       </div>
@@ -312,8 +312,8 @@ function renderCartItems() {
     return `
       <div class="empty-state">
         <p>Корзина пока пустая.</p>
-        <p>Удобнее всего начать с серий, затем открыть каталог и уже после этого собрать заказ в мессенджер.</p>
-        <a class="button button_secondary" href="catalog.html">Перейти в каталог</a>
+        <p>Если пока только присматриваетесь, начните с подбора по коже или сразу откройте каталог со всеми средствами.</p>
+        <a class="button button_secondary" href="series.html">Подобрать по коже</a>
       </div>
     `;
   }
@@ -445,7 +445,7 @@ function createFeaturedCard(product) {
         <p>${product.shortDescription}</p>
         <div class="mini-product__footer">
           <strong>${formatProductPrice(product)}</strong>
-          <a class="text-link" href="${productHref(product.id)}">Карточка товара</a>
+          <a class="text-link" href="${productHref(product.id)}">Подробнее о средстве</a>
         </div>
       </div>
     </article>
@@ -501,7 +501,7 @@ function createCatalogCard(product, index) {
         </div>
         <div class="button-row">
           <button class="button" type="button" data-add-to-cart="${product.id}">Добавить в корзину</button>
-          <a class="button button_secondary" href="${productHref(product.id)}">Узнать подробнее</a>
+          <a class="button button_secondary" href="${productHref(product.id)}">Открыть карточку</a>
         </div>
       </div>
     </article>
@@ -555,7 +555,7 @@ function renderHomePage() {
               <div class="eyebrow">${line.label}</div>
               <h3>${line.name}</h3>
               <p>${line.short}</p>
-              <a class="text-link" href="${seriesHref(line.slug)}">Перейти к серии</a>
+              <a class="text-link" href="${seriesHref(line.slug)}">Посмотреть направление</a>
             </div>
           </article>
         `
@@ -633,19 +633,21 @@ function renderCatalogPage() {
   const headline = byId("catalog-headline");
   const copy = byId("catalog-copy");
   if (headline) {
-    headline.textContent = activeLine ? `Каталог серии ${activeLine.name}` : "Каталог ухода";
+    headline.textContent = activeLine
+      ? `Средства направления ${activeLine.name}`
+      : "Если задача уже более-менее понятна, здесь можно спокойно сравнить средства.";
   }
   if (copy) {
     copy.textContent = activeLine
-      ? `${activeLine.long} Ниже собраны средства этой линии. Сначала можно спокойно сравнить текстуры, форматы и сценарии применения, а уточнение оставить на последний шаг.`
-      : "Каталог устроен как спокойный рабочий маршрут: сначала понять, с какой задачей работает средство, потом сравнить формат и цену, а уже после этого открывать карточку или уточнять подбор у Юлии.";
+      ? `${activeLine.long} Ниже можно спокойно сравнить форматы, цены и карточки средств, если это направление уже похоже на вашу задачу.`
+      : "Здесь удобно сравнить средства по формату, цене и тому, для какого состояния кожи они нужны. Если задача пока неясна, лучше сначала перейти к подбору по коже.";
   }
 
   applySeo(
     activeLine
       ? {
-          title: `Каталог серии ${activeLine.name} | Мелодия природы`,
-          description: `${activeLine.short} В фильтре собраны только средства этой линии.`,
+          title: `${activeLine.name}: средства направления | Мелодия природы`,
+          description: `${activeLine.short} Ниже собраны средства этого направления.`,
           canonical: absoluteUrl(seriesHref(activeLine.slug)),
           robots: "noindex,follow",
           image: activeLine.promo || activeLine.image,
@@ -653,7 +655,7 @@ function renderCatalogPage() {
       : {
           title: "Каталог натуральной уходовой косметики | Мелодия природы",
           description:
-            "Каталог бренда «Мелодия природы»: кремы, бальзамы, тоники, гидролаты и очищающие средства с карточками, составами и сценариями применения.",
+            "Каталог средств «Мелодия природы»: кремы, бальзамы, тоники, гидролаты и мягкое очищение, когда вы уже хотите спокойно сравнить форматы, цены и составы.",
           canonical: absoluteUrl("catalog.html"),
           robots: "index,follow,max-image-preview:large",
           image: "assets/images/brand-shot.png",
@@ -689,7 +691,7 @@ function renderProductPage() {
     shell.innerHTML = `
       <div class="container narrow">
         <div class="empty-state">
-          <p>Товар не найден.</p>
+          <p>Такого средства сейчас нет в каталоге.</p>
           <a class="button" href="catalog.html">Вернуться в каталог</a>
         </div>
       </div>
@@ -719,7 +721,7 @@ function renderProductPage() {
           </ul>
           <div class="button-row">
             <button class="button" type="button" data-add-to-cart="${product.id}">Добавить в корзину</button>
-            <a class="button button_secondary" href="${seriesHref(product.series)}">Назад к серии</a>
+            <a class="button button_secondary" href="${seriesHref(product.series)}">К направлению</a>
           </div>
         </div>
       </div>
@@ -727,8 +729,8 @@ function renderProductPage() {
     <section class="section section_tinted">
       <div class="container product-details">
         <article class="detail-card">
-          <div class="eyebrow">Описание</div>
-          <h2>Что делает формула</h2>
+          <div class="eyebrow">Что делает средство</div>
+          <h2>Какого эффекта ждать в уходе</h2>
           <p>${product.intro}</p>
         </article>
         <article class="detail-card">
@@ -758,14 +760,14 @@ function renderProductPage() {
           </div>
         </article>
         <article class="detail-card detail-card_wide">
-          <div class="eyebrow">Основная информация</div>
-          <h2>Что ещё важно знать</h2>
+          <div class="eyebrow">Перед заказом</div>
+          <h2>Что важно уточнить и учесть</h2>
           <ul class="bullet-list">
             ${product.productInfo.map((item) => `<li>${item}</li>`).join("")}
           </ul>
         </article>
         <article class="detail-card detail-card_wide">
-          <div class="eyebrow">Логика серии</div>
+          <div class="eyebrow">Когда смотреть это направление</div>
           <h2>${line.name}: ${line.accent}</h2>
           <p>${line.long}</p>
         </article>
@@ -774,8 +776,8 @@ function renderProductPage() {
     <section class="section">
       <div class="container">
         <div class="section-head">
-          <div class="eyebrow">Ещё из серии</div>
-          <h2>Продолжить ритуал ${line.name}</h2>
+          <div class="eyebrow">Что ещё посмотреть</div>
+          <h2>Похожие средства в направлении ${line.name}</h2>
         </div>
         <div class="mini-grid">
           ${related.map((item) => createFeaturedCard(item)).join("")}
@@ -797,11 +799,11 @@ function renderLegalPage(data, title) {
     <section class="section">
       <div class="container narrow">
         <div class="section-head">
-          <div class="eyebrow">Юридический блок</div>
+          <div class="eyebrow">Важная информация</div>
           <h1>${title}</h1>
           <p>
-            Информационный раздел бренда «${brand.name}». Перед запуском продаж стоит проверить
-            актуальность реквизитов, условий оплаты, доставки и возврата.
+            Здесь собраны условия, которые стоит спокойно проверить перед заказом:
+            способы связи, оплата, доставка и работа с личными данными.
           </p>
         </div>
         <div class="legal-stack">
